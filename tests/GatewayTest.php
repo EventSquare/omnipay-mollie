@@ -60,4 +60,9 @@ class GatewayTest extends GatewayTestCase
         $data = $request->getData();
         $this->assertSame('tr_Qzin4iTWrU', $data['id']);
     }
+
+    public function testRefund()
+    {
+        $request = $this->gateway->refund(array('amount' => '10.00'));
+    }
 }

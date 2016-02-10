@@ -90,4 +90,13 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Mollie\Message\CompletePurchaseRequest', $parameters);
     }
+
+    /**
+     * @param  array                                           $parameters
+     * @return \Omnipay\Mollie\Message\RefundRequest
+     */
+    public function refund(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mollie\Message\RefundRequest', $parameters);
+    }
 }
