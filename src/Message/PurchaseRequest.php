@@ -28,8 +28,12 @@ class PurchaseRequest extends AbstractRequest
         $data['description'] = $this->getDescription();
         $data['redirectUrl'] = $this->getReturnUrl();
         $data['method'] = $this->getPaymentMethod();
-        $data['metadata'] = $this->getMetadata();
+        $data['metadata'] = $this->filterInjectParams($this->getMetadata());
         $data['issuer'] = $this->getIssuer();
+
+        if($this->getParameter('metadata')['inject'])
+            foreach($this->getParameter('metadata')['inject'] as $k => $v)
+                $data[$k] = $v;
 
         $webhookUrl = $this->getNotifyUrl();
         if (null !== $webhookUrl) {
@@ -37,6 +41,15 @@ class PurchaseRequest extends AbstractRequest
         }
 
         return $data;
+    }
+
+    /**
+     * Filter inject params
+     */
+    private function filterInjectParams($metadata)
+    {
+        unset($metadata['inject']);
+        return $metadata;
     }
 
     public function sendData($data)
